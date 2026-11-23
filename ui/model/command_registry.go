@@ -341,7 +341,7 @@ func (m Model) commandHelp(mode commandMode) string {
 		ordered = append(ordered, help[0])
 	}
 	ordered = append(ordered, prominent...)
-	if mode == commandModeMain && m.luaMgr != nil {
+	if (mode == commandModeMain || mode == commandModeProvider) && m.luaMgr != nil {
 		// plugin keys (e.g. Ctrl+N YT radio) belong in the hint bar, not only in Ctrl+K
 		for _, b := range m.luaMgr.KeyBindings() {
 			if b.Description != "" {

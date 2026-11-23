@@ -520,6 +520,11 @@ func (m *Model) handleKey(msg tea.KeyPressMsg) tea.Cmd {
 			m.toggleExpandedView()
 		case "ctrl+f":
 			m.openProviderSearch()
+		default:
+			// plugin keys (e.g. Ctrl+N YT radio) must work while browsing playlists too
+			if m.luaMgr != nil {
+				m.luaMgr.EmitKey(msg.String())
+			}
 		}
 		return nil
 	}
