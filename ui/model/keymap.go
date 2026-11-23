@@ -8,7 +8,7 @@ import (
 )
 
 // keymapEntry is a row in the Ctrl+K overlay. Rows with `divider = true` are
-// unselectable section headers (e.g. "— plugins —").
+// unselectable section headers (e.g. "— pluginy —").
 type keymapEntry struct {
 	key, action string
 	divider     bool
@@ -45,13 +45,13 @@ func (m Model) buildKeymapEntries() []keymapEntry {
 
 	mode, label := m.keymapContext()
 	if mode != commandModeMain {
-		out = append(out, keymapEntry{action: "— current: " + label + " —", divider: true})
+		out = append(out, keymapEntry{action: "— teď: " + label + " —", divider: true})
 		for _, command := range commandRegistry {
 			if command.Mode != commandModeAny && (command.Keymap || command.ContextHelp) && command.enabled(m) && command.Mode&mode != 0 {
 				add(command)
 			}
 		}
-		out = append(out, keymapEntry{action: "— player & library —", divider: true})
+		out = append(out, keymapEntry{action: "— přehrávač a knihovna —", divider: true})
 	}
 	for _, command := range commandRegistry {
 		if command.Keymap && command.enabled(m) {
@@ -65,7 +65,7 @@ func (m Model) buildKeymapEntries() []keymapEntry {
 	if len(binds) == 0 {
 		return out
 	}
-	out = append(out, keymapEntry{action: "— plugins —", divider: true})
+	out = append(out, keymapEntry{action: "— pluginy —", divider: true})
 	for _, b := range binds {
 		label := b.Description
 		if b.Plugin != "" {
