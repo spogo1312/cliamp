@@ -318,7 +318,9 @@ func decodeYTDLPipe(pageURL string, sr beep.SampleRate, bitDepth, startSec int) 
 		"--socket-timeout", "15",
 		"-o", "-",
 	}
-	ytdlArgs = appendYTDLCookieArgs(ytdlArgs, pageURL)
+	// shortcut: no cookies for the audio download. With logged-in cookies, yt-dlp 2026.08.19
+	// gets a format whose download dies ("0 bytes read, N more expected"); anonymous works.
+	// Age-restricted/members-only tracks won't play. Retry with cookies once a newer yt-dlp fixes it.
 	ytdlArgs = append(ytdlArgs, "--", pageURL)
 	ytdlCmd := exec.Command("yt-dlp", ytdlArgs...)
 	ytdlCmd.Stdout = pw
